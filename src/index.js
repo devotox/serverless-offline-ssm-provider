@@ -27,7 +27,6 @@ class ServerlessOfflineSSMProvider {
     const stage = process.env.STAGE;
 
     aws.request = (service, method, params, options) => {
-      console.log(service);
       if (service !== 'SSM' || method !== 'getParameter' || stage !== 'local')
         return request(service, method, params, options);
 
