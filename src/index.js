@@ -24,9 +24,11 @@ class ServerlessOfflineSSMProvider {
 
     const aws = this.serverless.getProvider('aws');
     const request = aws.request.bind(aws);
+    const stage = process.env.STAGE;
 
     aws.request = (service, method, params, options) => {
-      if (service !== 'SSM' || method !== 'getParameter')
+      console.log(service);
+      if (service !== 'SSM' || method !== 'getParameter' || stage !== 'local')
         return request(service, method, params, options);
 
       return Promise.resolve({
